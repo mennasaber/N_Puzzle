@@ -1,0 +1,14 @@
+E:\NONA\C#_Projects\N_Puzzle\N_Puzzle\bin\Debug\N_Puzzle.exe.config
+E:\NONA\C#_Projects\N_Puzzle\N_Puzzle\obj\Debug\N_Puzzle.csprojResolveAssemblyReference.cache
+E:\NONA\C#_Projects\N_Puzzle\N_Puzzle\obj\Debug\N_Puzzle.Properties.Resources.resources
+E:\NONA\C#_Projects\N_Puzzle\N_Puzzle\obj\Debug\N_Puzzle.csproj.GenerateResource.Cache
+E:\NONA\C#_Projects\N_Puzzle\N_Puzzle\bin\Debug\N_Puzzle.exe
+E:\NONA\C#_Projects\N_Puzzle\N_Puzzle\bin\Debug\N_Puzzle.pdb
+E:\NONA\C#_Projects\N_Puzzle\N_Puzzle\obj\Debug\N_Puzzle.exe
+E:\NONA\C#_Projects\N_Puzzle\N_Puzzle\obj\Debug\N_Puzzle.pdb
+E:\NONA\C#_Projects\N_Puzzle\N_Puzzle\bin\Debug\MetroFramework.dll
+E:\NONA\C#_Projects\N_Puzzle\N_Puzzle\bin\Debug\MetroFramework.Fonts.dll
+E:\NONA\C#_Projects\N_Puzzle\N_Puzzle\obj\Debug\N_Puzzle.Forms.mainForm.resources
+E:\NONA\C#_Projects\N_Puzzle\N_Puzzle\obj\Debug\N_Puzzle.UserControls.containerUserControl.resources
+E:\NONA\C#_Projects\N_Puzzle\N_Puzzle\obj\Debug\N_Puzzle.UserControls.matrix_3_userControl.resources
+E:\NONA\C#_Projects\N_Puzzle\N_Puzzle\obj\Debug\N_Puzzle.Forms.playForm.resources
