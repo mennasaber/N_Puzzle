@@ -27,7 +27,7 @@ namespace N_Puzzle.Forms
             containerUserControl container=new containerUserControl();
             for (int n = 6; n >0; n--)
             {
-                string[] lines = System.IO.File.ReadAllLines(@"E:\NONA\C#_Projects\N_Puzzle\N_Puzzle\bin\Debug\"+n+".txt");
+                string[] lines = System.IO.File.ReadAllLines(@"" + n+".txt");
 
 
                 int m = Int32.Parse(lines[0]);

@@ -6,23 +6,31 @@ using System.Threading.Tasks;
 
 namespace N_Puzzle.Models
 {
-    class Vertex<T>
+    class Vertex
     {
-        // T can be int or any data type
-        private T[][] matrix;
+        private int[,] matrix;
         private int manhattan;
         private int hamming;
         private int distance;
-        private Vertex<T> parent;      
-        private LinkedList<Vertex<T>> adjacent;
+        private Vertex parent;
+        private LinkedList<Vertex> adjacent;
+        private String direction;
+        private int zeroIndex_i;
+        private int zeroIndex_j;
+        private int cost;
 
-        public Vertex(T[][] matrix)
+
+        public Vertex()
+        {
+
+        }
+        public Vertex(int[,] matrix)
         {
             this.matrix = matrix;
-            this.adjacent = new LinkedList<Vertex<T>>();
+            this.adjacent = new LinkedList<Vertex>();
         }
 
-        public T[][] Matrix
+        public int[,] Matrix
         {
             get
             {
@@ -61,7 +69,7 @@ namespace N_Puzzle.Models
             }
         }
 
-        public Vertex<T> Parent
+        public Vertex Parent
         {
             get
             {
@@ -74,7 +82,7 @@ namespace N_Puzzle.Models
             }
         }
 
-        public LinkedList<Vertex<T>> Adjacent
+        public LinkedList<Vertex> Adjacent
         {
             get
             {
@@ -101,18 +109,96 @@ namespace N_Puzzle.Models
         }
 
 
+        public int ZeroIndex_i
+        {
+            get
+            {
+                return zeroIndex_i;
+            }
+
+            set
+            {
+                zeroIndex_i = value;
+            }
+        }
+        public int ZeroIndex_j
+        {
+            get
+            {
+                return zeroIndex_j;
+            }
+
+            set
+            {
+                zeroIndex_j = value;
+            }
+        }
+
+        public string Direction
+        {
+            get
+            {
+                return direction;
+            }
+
+            set
+            {
+                direction = value;
+            }
+        }
+
+        public int Cost
+        {
+            get
+            {
+                return cost;
+            }
+
+            set
+            {
+                cost = value;
+            }
+        }
+
+
+
         /// <summary>
         /// Take vertex from main and add it to adjacent linked list
         /// </summary>
         /// <param name="adj"></param>
-        public void addAdjacent(Vertex<T> adj)
+        public void addAdjacent(Vertex adj)
         {
             Adjacent.AddLast(adj);
         }
-        public void calculateHamming() {
-            //TODO: calculate hamming for this matrix 
+        public void calculateHamming()
+        {
+            //TODO: calculate hamming for this matrix
+            for (int i = 0; i < Math.Sqrt(Matrix.Length); i++)
+            {
+                for (int j = 0; j < Math.Sqrt(Matrix.Length); j++)
+                {
+                    int size = Convert.ToInt32(Math.Sqrt(Matrix.Length));
+                    if (j == size - 1)
+                    {
+                        if (matrix[i, j] != (i + 1) * size && matrix[i, j] != 0)
+                        {
+                            Hamming += 1;
+                        }
+                    }
+                    else if ((matrix[i, j] / size != i || matrix[i, j] % size - 1 != j) && matrix[i, j] != 0)
+                    {
+                        Hamming += 1;
+                    }
+                    if (matrix[i, j] == 0)
+                    {
+                        ZeroIndex_i = i;
+                        ZeroIndex_j = j;
+                    }
+                }
+            }
         }
-        public void calculateManhattan() {
+        public void calculateManhattan()
+        {
             //TODO: calculate manhattan for this matrix
         }
 

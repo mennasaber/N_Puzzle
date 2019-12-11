@@ -71,6 +71,7 @@
       <DependentUpon>playForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\Vertex.cs" />
+    <Compile Include="Models\priorityQueue.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserControls\containerUserControl.cs">
