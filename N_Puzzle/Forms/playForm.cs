@@ -208,5 +208,10 @@ namespace N_Puzzle.Forms
         {
             //TODO : load solution to GUI
         }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }
