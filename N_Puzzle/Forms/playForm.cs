@@ -26,7 +26,7 @@ namespace N_Puzzle.Forms
             {
                 Vertex v = new Vertex(matrix);
                 v.Distance = 0;
-                v.calculateHamming();
+                v.calculateManhattan();
                 v.Direction = "";
                 graph.Add(v);
                 priorityQueue.Enqueue(v);
@@ -111,7 +111,7 @@ namespace N_Puzzle.Forms
             int size = Convert.ToInt32(Math.Sqrt(temp.Matrix.Length));
             while (true)
             {
-                if (temp.Hamming == 0)
+                if (temp.Manhattan == 0)
                 {
                     MessageBox.Show(temp.Distance.ToString());
                     break;
@@ -123,9 +123,10 @@ namespace N_Puzzle.Forms
                     nMatrix[temp.ZeroIndex_i, temp.ZeroIndex_j] = temp.Matrix[temp.ZeroIndex_i + 1, temp.ZeroIndex_j];
                     nMatrix[temp.ZeroIndex_i + 1, temp.ZeroIndex_j] = 0;
                     Vertex u = new Vertex(nMatrix);
-                    u.calculateHamming();
+                    u.calculateManhattan();
                     u.Distance = temp.Distance + 1;
-                    u.Cost = u.Distance + u.Hamming;
+
+                    u.Cost = u.Distance + u.Manhattan;
                     u.Parent = temp;
                     u.Direction = "D";
                     priorityQueue.Enqueue(u);
@@ -138,9 +139,9 @@ namespace N_Puzzle.Forms
                     nMatrix[temp.ZeroIndex_i, temp.ZeroIndex_j] = temp.Matrix[temp.ZeroIndex_i - 1, temp.ZeroIndex_j];
                     nMatrix[temp.ZeroIndex_i - 1, temp.ZeroIndex_j] = 0;
                     Vertex u = new Vertex(nMatrix);
-                    u.calculateHamming();
+                    u.calculateManhattan();
                     u.Distance = temp.Distance + 1;
-                    u.Cost = u.Distance + u.Hamming;
+                    u.Cost = u.Distance + u.Manhattan;
                     u.Parent = temp;
                     u.Direction = "U";
                     priorityQueue.Enqueue(u);
@@ -154,9 +155,9 @@ namespace N_Puzzle.Forms
                     nMatrix[temp.ZeroIndex_i, temp.ZeroIndex_j] = temp.Matrix[temp.ZeroIndex_i, temp.ZeroIndex_j + 1];
                     nMatrix[temp.ZeroIndex_i, temp.ZeroIndex_j + 1] = 0;
                     Vertex u = new Vertex(nMatrix);
-                    u.calculateHamming();
+                    u.calculateManhattan();
                     u.Distance = temp.Distance + 1;
-                    u.Cost = u.Distance + u.Hamming;
+                    u.Cost = u.Distance + u.Manhattan;
                     u.Parent = temp;
                     u.Direction = "R";
                     priorityQueue.Enqueue(u);
@@ -170,9 +171,9 @@ namespace N_Puzzle.Forms
                     nMatrix[temp.ZeroIndex_i, temp.ZeroIndex_j] = temp.Matrix[temp.ZeroIndex_i, temp.ZeroIndex_j - 1];
                     nMatrix[temp.ZeroIndex_i, temp.ZeroIndex_j - 1] = 0;
                     Vertex u = new Vertex(nMatrix);
-                    u.calculateHamming();
+                    u.calculateManhattan();
                     u.Distance = temp.Distance + 1;
-                    u.Cost = u.Distance + u.Hamming;
+                    u.Cost = u.Distance + u.Manhattan;
                     u.Parent = temp;
                     u.Direction = "L";
                     priorityQueue.Enqueue(u);
