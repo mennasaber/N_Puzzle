@@ -170,6 +170,25 @@ namespace N_Puzzle.Models
         {
             Adjacent.AddLast(adj);
         }
+        public bool solved()
+        {
+            int counter = 1;
+            for (int i = 0; i < Math.Sqrt(Matrix.Length); i++)
+            {
+                for (int j = 0; j < Math.Sqrt(Matrix.Length); j++)
+                {
+                    if (matrix[i,j]!=counter&&matrix[i,j]!=0)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        counter++;
+                    }
+                }
+            }
+            return true;
+        }
         public void calculateHamming()
         {
             //TODO: calculate hamming for this matrix
