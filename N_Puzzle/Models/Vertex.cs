@@ -170,6 +170,25 @@ namespace N_Puzzle.Models
         {
           //  Adjacent.AddLast(adj);
         }
+        public bool solved()
+        {
+            int counter = 1;
+            for (int i = 0; i < Math.Sqrt(Matrix.Length); i++)
+            {
+                for (int j = 0; j < Math.Sqrt(Matrix.Length); j++)
+                {
+                    if (matrix[i,j]!=counter&&matrix[i,j]!=0)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        counter++;
+                    }
+                }
+            }
+            return true;
+        }
         public void calculateHamming()
         {
             //TODO: calculate hamming for this matrix
@@ -200,6 +219,33 @@ namespace N_Puzzle.Models
         public void calculateManhattan()
         {
             //TODO: calculate manhattan for this matrix
+           // manhattan = 0;
+            int size = Convert.ToInt32(Math.Sqrt(Matrix.Length));
+            for (int i = 0; i < size; i++)
+            {
+                for (int j = 0; j < size; j++)
+                {
+                    if (matrix[i,j]% size!=0)
+                    {
+                        manhattan += Math.Abs(i - (matrix[i, j] / size)) + Math.Abs(j - ((matrix[i, j] % size) - 1));
+                       
+                    }
+                    else
+                    {
+                        if (matrix[i,j]!=0)
+                        {
+                            manhattan += Math.Abs(i - ((matrix[i, j] / size) - 1)) + Math.Abs(j - (size - 1));
+                        }
+                        else
+                        {
+                            manhattan += Math.Abs(i - (size - 1)) + Math.Abs(j - (size - 1));
+                            ZeroIndex_i = i;
+                            ZeroIndex_j = j;
+                        }
+                    }
+                    
+                }
+            }
         }
 
     }
