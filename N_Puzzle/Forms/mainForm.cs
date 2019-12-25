@@ -25,7 +25,7 @@ namespace N_Puzzle.Forms
         private void mainForm_Load(object sender, EventArgs e)
         {
             containerUserControl container=new containerUserControl();
-            for (int n = 6; n >0; n--)
+            for (int n = 7; n >0; n--)
             {
                 string[] lines = System.IO.File.ReadAllLines(@"" + n+".txt");
 

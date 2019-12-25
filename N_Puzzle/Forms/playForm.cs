@@ -31,8 +31,8 @@ namespace N_Puzzle.Forms
                 graph.Add(v);
                 priorityQueue.Enqueue(v);
                 convertToGraph();
-                List<Vertex> path = getShortestPath(graph);
-                load_solution(path);
+               // List<Vertex> path = getShortestPath(graph);
+                //load_solution(path);
             }
         }
         private void load_initial_matix(int[,] matrix)
@@ -113,7 +113,8 @@ namespace N_Puzzle.Forms
             {
                 if (temp.Hamming == 0)
                 {
-                    MessageBox.Show(temp.Distance.ToString());
+                    
+                    label2.Text = "Number of moves = " + temp.Distance;
                     break;
                 }
                 if (temp.ZeroIndex_i + 1 < size && temp.Direction != "U")
@@ -123,7 +124,7 @@ namespace N_Puzzle.Forms
                     nMatrix[temp.ZeroIndex_i, temp.ZeroIndex_j] = temp.Matrix[temp.ZeroIndex_i + 1, temp.ZeroIndex_j];
                     nMatrix[temp.ZeroIndex_i + 1, temp.ZeroIndex_j] = 0;
                     Vertex u = new Vertex(nMatrix);
-                    u.calculateHamming();
+                    u.calculateHamming();                   
                     u.Distance = temp.Distance + 1;
                     u.Cost = u.Distance + u.Hamming;
                     u.Parent = temp;
@@ -138,7 +139,7 @@ namespace N_Puzzle.Forms
                     nMatrix[temp.ZeroIndex_i, temp.ZeroIndex_j] = temp.Matrix[temp.ZeroIndex_i - 1, temp.ZeroIndex_j];
                     nMatrix[temp.ZeroIndex_i - 1, temp.ZeroIndex_j] = 0;
                     Vertex u = new Vertex(nMatrix);
-                    u.calculateHamming();
+                    u.calculateHamming();                 
                     u.Distance = temp.Distance + 1;
                     u.Cost = u.Distance + u.Hamming;
                     u.Parent = temp;
@@ -179,7 +180,7 @@ namespace N_Puzzle.Forms
                     temp.addAdjacent(u);
                 }
                 temp = priorityQueue.Dequeue();
-                graph.Add(temp);
+                //graph.Add(temp);
             }
         }
 

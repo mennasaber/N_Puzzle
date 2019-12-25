@@ -9,7 +9,11 @@ namespace N_Puzzle
     class priorityQueue
     {
         private List<Vertex> Queue=new List<Vertex>();
-
+        
+        public int lenght()
+        {
+            return Queue.Count;
+        }
         public priorityQueue()
         {
             
@@ -27,6 +31,7 @@ namespace N_Puzzle
                     Queue[index] = Queue[parent];
                     Queue[parent] = temp;
                     index = parent;
+                    parent = (index - 1) / 2;
                 }
             }
         }
@@ -42,15 +47,12 @@ namespace N_Puzzle
         {
             int L = 2 * i + 1;
             int R = 2 * i + 2;
-            int Smallest;
+            int Smallest=i;
             if (L < Queue.Count && Queue[L].Cost < Queue[i].Cost)
             {
                 Smallest = L;
             }
-            else
-            {
-                Smallest = i;
-            }
+
             if (R < Queue.Count && Queue[R].Cost < Queue[Smallest].Cost)
             {
                 Smallest = R;

@@ -168,7 +168,7 @@ namespace N_Puzzle.Models
         /// <param name="adj"></param>
         public void addAdjacent(Vertex adj)
         {
-            Adjacent.AddLast(adj);
+          //  Adjacent.AddLast(adj);
         }
         public void calculateHamming()
         {

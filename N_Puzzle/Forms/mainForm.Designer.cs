@@ -61,7 +61,6 @@
             this.ClientSize = new System.Drawing.Size(856, 566);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.panel1);
-            this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "mainForm";
             this.Resizable = false;
