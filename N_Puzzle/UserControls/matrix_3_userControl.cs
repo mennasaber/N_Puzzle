@@ -107,9 +107,10 @@ namespace N_Puzzle.UserControls
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Click_label(object sender, EventArgs e)
-        {
+        {           
             playForm playForm = new playForm(matrix);
             playForm.Show();
+            
         }
     }
 }

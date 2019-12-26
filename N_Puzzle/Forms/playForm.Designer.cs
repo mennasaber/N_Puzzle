@@ -35,9 +35,10 @@
             // 
             // panel1
             // 
+            this.panel1.AutoScroll = true;
             this.panel1.Location = new System.Drawing.Point(23, 63);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(810, 432);
+            this.panel1.Size = new System.Drawing.Size(810, 582);
             this.panel1.TabIndex = 0;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
@@ -57,7 +58,7 @@
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Comic Sans MS", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(174)))), ((int)(((byte)(219)))));
-            this.label2.Location = new System.Drawing.Point(277, 511);
+            this.label2.Location = new System.Drawing.Point(281, 648);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(121, 35);
             this.label2.TabIndex = 3;
@@ -67,7 +68,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(856, 566);
+            this.ClientSize = new System.Drawing.Size(867, 710);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.panel1);

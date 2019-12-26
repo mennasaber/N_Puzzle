@@ -15,10 +15,10 @@ namespace N_Puzzle.Forms
     public partial class playForm : MetroFramework.Forms.MetroForm
     {
         priorityQueue priorityQueue = new priorityQueue();
-        private List<Vertex> graph = new List<Vertex>();
+        // private List<Vertex> graph = new List<Vertex>();
         bool solvable;
         Queue<Vertex> Q = new Queue<Vertex>();
-      
+
         public playForm(int[,] matrix)
         {
             InitializeComponent();
@@ -28,25 +28,29 @@ namespace N_Puzzle.Forms
             {
                 Vertex v = new Vertex(matrix);
                 v.Distance = 0;
-                //v.calculateManhattan();
+                v.calculateManhattan();
                 v.Direction = "";
-                
-                BFS(v);
+                priorityQueue.Enqueue(v);
+                int now = DateTime.Now.Minute;
+                var watch = System.Diagnostics.Stopwatch.StartNew();
+                convertToGraph();
+                watch.Stop();
+                int after = DateTime.Now.Minute;
+                var elapsedMs = watch.ElapsedMilliseconds;
+                MessageBox.Show("Execution Time = " + elapsedMs.ToString() + "ms");
+                MessageBox.Show("Execution Time = " + (after - now).ToString() + "m");
+                //BFS(v);
                 //graph.Add(v);
                 //priorityQueue.Enqueue(v);
                 //convertToGraph();
-                List<Vertex> path = getShortestPath(graph);
-                load_solution(path);
+                //List<Vertex> path = getShortestPath(graph);
+                //load_solution(path);
+
             }
         }
         private void load_initial_matix(int[,] matrix)
         {
-            panel1.Controls.Clear();
-            containerUserControl container = new containerUserControl();
-            container.addMatrix(matrix, 1);
-            panel1.Controls.Add(container);
         }
-
         private bool checkSolvable(int[,] matrix)
         {
             int[] arr = new int[matrix.Length];
@@ -115,9 +119,11 @@ namespace N_Puzzle.Forms
             int size = Convert.ToInt32(Math.Sqrt(temp.Matrix.Length));
             while (true)
             {
+
                 if (temp.Manhattan == 0)
                 {
-                    MessageBox.Show(temp.Distance.ToString());
+                    getShortestPath(temp);
+                    label2.Text = "Number of moves = " + temp.Distance;
                     break;
                 }
                 if (temp.ZeroIndex_i + 1 < size && temp.Direction != "U")
@@ -127,14 +133,13 @@ namespace N_Puzzle.Forms
                     nMatrix[temp.ZeroIndex_i, temp.ZeroIndex_j] = temp.Matrix[temp.ZeroIndex_i + 1, temp.ZeroIndex_j];
                     nMatrix[temp.ZeroIndex_i + 1, temp.ZeroIndex_j] = 0;
                     Vertex u = new Vertex(nMatrix);
+                    //u.calculateHamming();                   
                     u.calculateManhattan();
                     u.Distance = temp.Distance + 1;
-
                     u.Cost = u.Distance + u.Manhattan;
                     u.Parent = temp;
                     u.Direction = "D";
                     priorityQueue.Enqueue(u);
-                    temp.addAdjacent(u);
                 }
                 if (temp.ZeroIndex_i - 1 > -1 && temp.Direction != "D")
                 {
@@ -143,13 +148,14 @@ namespace N_Puzzle.Forms
                     nMatrix[temp.ZeroIndex_i, temp.ZeroIndex_j] = temp.Matrix[temp.ZeroIndex_i - 1, temp.ZeroIndex_j];
                     nMatrix[temp.ZeroIndex_i - 1, temp.ZeroIndex_j] = 0;
                     Vertex u = new Vertex(nMatrix);
+                    // u.calculateHamming();                 
                     u.calculateManhattan();
                     u.Distance = temp.Distance + 1;
                     u.Cost = u.Distance + u.Manhattan;
                     u.Parent = temp;
                     u.Direction = "U";
                     priorityQueue.Enqueue(u);
-                    temp.addAdjacent(u);
+
                 }
 
                 if (temp.ZeroIndex_j + 1 < size && temp.Direction != "L")
@@ -159,13 +165,13 @@ namespace N_Puzzle.Forms
                     nMatrix[temp.ZeroIndex_i, temp.ZeroIndex_j] = temp.Matrix[temp.ZeroIndex_i, temp.ZeroIndex_j + 1];
                     nMatrix[temp.ZeroIndex_i, temp.ZeroIndex_j + 1] = 0;
                     Vertex u = new Vertex(nMatrix);
+                    // u.calculateHamming(); 
                     u.calculateManhattan();
                     u.Distance = temp.Distance + 1;
                     u.Cost = u.Distance + u.Manhattan;
                     u.Parent = temp;
                     u.Direction = "R";
                     priorityQueue.Enqueue(u);
-                    temp.addAdjacent(u);
                 }
 
                 if (temp.ZeroIndex_j - 1 > -1 && temp.Direction != "R")
@@ -175,45 +181,50 @@ namespace N_Puzzle.Forms
                     nMatrix[temp.ZeroIndex_i, temp.ZeroIndex_j] = temp.Matrix[temp.ZeroIndex_i, temp.ZeroIndex_j - 1];
                     nMatrix[temp.ZeroIndex_i, temp.ZeroIndex_j - 1] = 0;
                     Vertex u = new Vertex(nMatrix);
+                    // u.calculateHamming(); 
                     u.calculateManhattan();
                     u.Distance = temp.Distance + 1;
                     u.Cost = u.Distance + u.Manhattan;
                     u.Parent = temp;
                     u.Direction = "L";
                     priorityQueue.Enqueue(u);
-                    temp.addAdjacent(u);
                 }
                 temp = priorityQueue.Dequeue();
-                graph.Add(temp);
             }
         }
 
-        private List<Vertex> getShortestPath(List<Vertex> graph)
+        containerUserControl container = new containerUserControl();
+        private void getShortestPath(Vertex last)
         {
-            Vertex last = graph[graph.Count - 1];
-            Vertex temp= graph[graph.Count - 1]; 
-            for (int i = 0; i <= temp.Distance; i++)
-            {               
+            List<int[,]> path = new List<int[,]>();
+            panel1.Controls.Clear();
+            Vertex temp = last;
+            path.Add(temp.Matrix);
+            for (int i = 0; i < temp.Distance; i++)
+            {
                 MessageBox.Show(last.Distance.ToString());
                 MessageBox.Show(last.Direction);
                 Vertex parent = last.Parent;
                 last = parent;
+                path.Add(parent.Matrix);
             }
-            //TODO: Display path
-            List<Vertex> path = new List<Vertex>();
-            return path;
+            for (int i = temp.Distance; i >= 0; i--)
+            {
+                container.addMatrix(path[i], 1);
+            }
+            panel1.Controls.Add(container);
         }
 
         private void BFS(Vertex v)
         {
             Vertex temp = new Vertex();
-            int size  = Convert.ToInt32(Math.Sqrt(v.Matrix.Length));
+            int size = Convert.ToInt32(Math.Sqrt(v.Matrix.Length));
             Q.Enqueue(v);
             for (int i = 0; i < size; i++)
             {
                 for (int j = 0; j < size; j++)
                 {
-                    if (v.Matrix[i,j]==0)
+                    if (v.Matrix[i, j] == 0)
                     {
                         v.ZeroIndex_i = i;
                         v.ZeroIndex_j = j;
@@ -221,12 +232,11 @@ namespace N_Puzzle.Forms
 
                 }
             }
-            while (Q.Count>0)
+            while (Q.Count > 0)
             {
                 temp = Q.Dequeue();
                 if (temp.solved())
                 {
-                    graph.Add(temp);
                     break;
                 }
 
@@ -237,15 +247,14 @@ namespace N_Puzzle.Forms
                     nMatrix[temp.ZeroIndex_i, temp.ZeroIndex_j] = temp.Matrix[temp.ZeroIndex_i + 1, temp.ZeroIndex_j];
                     nMatrix[temp.ZeroIndex_i + 1, temp.ZeroIndex_j] = 0;
                     Vertex u = new Vertex(nMatrix);
-                    u.ZeroIndex_i=temp.ZeroIndex_i + 1 ;
+                    u.ZeroIndex_i = temp.ZeroIndex_i + 1;
                     u.ZeroIndex_j = temp.ZeroIndex_j;
-                  //  u.calculateManhattan();
                     u.Distance = temp.Distance + 1;
                     u.Cost = u.Distance;
                     u.Parent = temp;
                     u.Direction = "D";
                     Q.Enqueue(u);
-                  //  temp.addAdjacent(u);
+                    temp.addAdjacent(u);
                 }
                 if (temp.ZeroIndex_i - 1 > -1 && temp.Direction != "D")
                 {
@@ -254,15 +263,14 @@ namespace N_Puzzle.Forms
                     nMatrix[temp.ZeroIndex_i, temp.ZeroIndex_j] = temp.Matrix[temp.ZeroIndex_i - 1, temp.ZeroIndex_j];
                     nMatrix[temp.ZeroIndex_i - 1, temp.ZeroIndex_j] = 0;
                     Vertex u = new Vertex(nMatrix);
-                    u.ZeroIndex_i= temp.ZeroIndex_i - 1;
+                    u.ZeroIndex_i = temp.ZeroIndex_i - 1;
                     u.ZeroIndex_j = temp.ZeroIndex_j;
-                    //   u.calculateManhattan();
                     u.Distance = temp.Distance + 1;
-                    u.Cost = u.Distance;
                     u.Parent = temp;
+                    u.Cost = u.Distance;
                     u.Direction = "U";
                     Q.Enqueue(u);
-              //      temp.addAdjacent(u);
+                    temp.addAdjacent(u);
                 }
 
                 if (temp.ZeroIndex_j + 1 < size && temp.Direction != "L")
@@ -272,15 +280,14 @@ namespace N_Puzzle.Forms
                     nMatrix[temp.ZeroIndex_i, temp.ZeroIndex_j] = temp.Matrix[temp.ZeroIndex_i, temp.ZeroIndex_j + 1];
                     nMatrix[temp.ZeroIndex_i, temp.ZeroIndex_j + 1] = 0;
                     Vertex u = new Vertex(nMatrix);
-                    u.ZeroIndex_j= temp.ZeroIndex_j + 1;
+                    u.ZeroIndex_j = temp.ZeroIndex_j + 1;
                     u.ZeroIndex_i = temp.ZeroIndex_i;
-                    //  u.calculateManhattan();
                     u.Distance = temp.Distance + 1;
                     u.Cost = u.Distance;
                     u.Parent = temp;
                     u.Direction = "R";
-                   Q.Enqueue(u);
-                //    temp.addAdjacent(u);
+                    Q.Enqueue(u);
+                    temp.addAdjacent(u);
                 }
 
                 if (temp.ZeroIndex_j - 1 > -1 && temp.Direction != "R")
@@ -292,21 +299,14 @@ namespace N_Puzzle.Forms
                     Vertex u = new Vertex(nMatrix);
                     u.ZeroIndex_j = temp.ZeroIndex_j - 1;
                     u.ZeroIndex_i = temp.ZeroIndex_i;
-                    //   u.calculateManhattan();
                     u.Distance = temp.Distance + 1;
-                    u.Cost = u.Distance ;
+                    u.Cost = u.Distance;
                     u.Parent = temp;
                     u.Direction = "L";
                     Q.Enqueue(u);
-                  //  temp.addAdjacent(u);
+                    temp.addAdjacent(u);
                 }
-
-
-
             }
-
-
-
         }
         private void playForm_Load(object sender, EventArgs e)
         {
